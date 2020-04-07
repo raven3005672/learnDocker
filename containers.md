@@ -48,5 +48,21 @@ docker logs [CONTAINER ID]
 
 ## 终止容器
 
+docker stop [-t|--time[=10]]
 
+首先向容器发送SIGTERM信号，等待一段时间后（默认为10秒），再发送SIGKILL信号终止容器。
+
+docker kill命令会直接发送SIGKILL信号来强行终止容器。
+
+docker ps -a -q命令看到处于终止状态的容器的ID信息
+
+处于终止状态的容器，可以通过docker start命令来重新启动
+```
+docker start [CONTAINER ID]
+```
+
+docker restart命令会将一个运行态的容器终止，然后再重新启动它
+```
+docker restart [CONTAINER ID]
+```
 
