@@ -66,3 +66,55 @@ docker restart命令会将一个运行态的容器终止，然后再重新启动
 docker restart [CONTAINER ID]
 ```
 
+## 进入容器
+
+* docker attach
+* docker exec
+* nsenter工具
+
+### docker attach
+
+多个窗口同时attach到同一个容器的时候，所有串口都会同步显示。当某个窗口因命令阻塞时，其他窗口也无法执行操作了。
+
+### docker exec
+
+直接在容器内运行命令
+```
+docker exec -ti [ID] /bin/bash
+```
+
+### nsenter工具
+
+nsenter --target $PID --mount --uts --ipc --net --pid
+
+```
+docker run -idt unbuntu
+docker ps
+PID=${docker-pid 243xxxxxxxx}
+nsenter --target 10981 --mount --uts --ipc --net --pid
+```
+
+## 删除容器
+
+docker rm [OPTIONS] CONTAINER [CONTAINER...]
+* -f, --force=false     强行终止并删除一个运行中的容器
+* -l, --link=false      删除容器的连接，但保留容器
+* -v, --volumes=false   删除容器挂载的数据卷
+
+## 导入和导出容器
+
+### 导出容器
+
+docker export CONTAINER
+```
+docker ps -a
+docker export ce5[ID] >test_for_run.tar
+```
+
+### 导入容器
+
+docker import
+```
+cat test_for_run.tar | docker import - test/ubuntu:v1.0
+docker images
+```
